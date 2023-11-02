@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="ResponseCheck.jsp" %>
 <%
-String id = value;
+String id = cookie.getValue();
 %>
 <!DOCTYPE html>
 <html>
