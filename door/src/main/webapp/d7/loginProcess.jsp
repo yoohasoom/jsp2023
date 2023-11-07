@@ -20,10 +20,13 @@ username: <%= username %>
 	<%
 	JDBConnect jdbc = new JDBConnect();
 
-Statement stmt = jdbc.con.createStatement();
-String sql = "SELECT * FROM MEMBER WHERE id='" + username + "' AND pass='" + password + "'";
+PseparedStatement pstmt = jdbc.con.PsepareStatement(sql);
+pstmt.setString(1, username);
+pstmt.setString(2, username);
+ResultSet rs = pstmt.executeQuery();
+String sql = "SELECT * FROM MEMBER WHERE id=? AND pass=?";
 
-ResultSet rs = stmt.executeQuery(sql);
+ResultSet rs = pstmt.executeQuery(sql);
 
 while(rs.next()){
 	String id = rs.getString(1);
