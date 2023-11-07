@@ -1,3 +1,4 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="door.JDBConnect"%>
@@ -20,14 +21,13 @@ username: <%= username %>
 	<%
 	JDBConnect jdbc = new JDBConnect();
 
-PseparedStatement pstmt = jdbc.con.PsepareStatement(sql);
-pstmt.setString(1, username);
-pstmt.setString(2, username);
-ResultSet rs = pstmt.executeQuery();
 String sql = "SELECT * FROM MEMBER WHERE id=? AND pass=?";
+PreparedStatement pstmt = jdbc.con.prepareStatement(sql);
+pstmt.setString(1, username);
+pstmt.setString(2, password);
+ResultSet rs = pstmt.executeQuery();
 
-ResultSet rs = pstmt.executeQuery(sql);
-
+boolean isLogin = false;
 while(rs.next()){
 	String id = rs.getString(1);
 	String pass = rs.getString(2);
@@ -35,7 +35,12 @@ while(rs.next()){
 	java.sql.Date regidate = rs.getDate("regidate");
 	
 	out.println(String.format("%s %s %s %s", id, pass, name, regidate) + "<br>");
+	isLogin = true;
+	session.setAttribute("id", id);
 }
-%>
+if(!isLogin){
+	session.removeAttribute("id");
+}
+%><a href="login.jsp">·Î±×ÀÎ</a>
 </body>
 </html>

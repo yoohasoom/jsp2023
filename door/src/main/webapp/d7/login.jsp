@@ -6,10 +6,16 @@
 <head>
     <title>로그인</title>
     <link rel="stylesheet" href="login.css">
-</head>
+</head>\
+<%
+String id = (String)session.getAttribute("id");
+if (id == null){
+	id = "";
+}
+%>
 <body>
     <div class="login-container">
-        <h2>환영합니다</h2>
+        <h2>환영합니다 <%= id %></h2>
         <form action="loginProcess.jsp" method="post">
             <div class="form-group">
                 <label for="username">사용자 이름:</label>
